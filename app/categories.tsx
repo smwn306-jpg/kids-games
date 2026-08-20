@@ -1,52 +1,7 @@
-import { Image, Pressable, StyleSheet, View, useWindowDimensions } from 'react-native';
-import { router } from 'expo-router';
-
-const BASE_W = 347, BASE_H = 557;
-
-export default function Categories() {
-  const { width, height } = useWindowDimensions();
-  const sx = width / BASE_W, sy = height / BASE_H;
-
-  const getRect = (x: number, y: number, w: number, h: number) => ({
-    position: 'absolute' as const,
-    left: x * sx,
-    top: y * sy,
-    width: w * sx,
-    height: h * sy,
-  });
-
-  return (
-    <View style={styles.root}>
-      <Image 
-        source={require('../assets/categories-reference.png')} 
-        style={styles.bg} 
-        resizeMode="stretch"
-      />
-
-      <Pressable style={getRect(10, 10, 50, 40)} onPress={() => router.back()} />
-
-      <Pressable style={getRect(20, 75, 90, 85)} onPress={() => router.push('/levels')} />
-      <Pressable style={getRect(125, 75, 90, 85)} onPress={() => router.push('/game/numbers')} />
-      <Pressable style={getRect(230, 75, 90, 85)} onPress={() => router.push('/game/letters')} />
-
-      <Pressable style={getRect(20, 170, 90, 85)} onPress={() => router.push('/game/colors')} />
-      <Pressable style={getRect(125, 170, 90, 85)} onPress={() => router.push('/game/puzzles')} />
-      <Pressable style={getRect(230, 170, 90, 85)} onPress={() => router.push('/game/memory')} />
-
-      <Pressable style={getRect(20, 265, 90, 85)} onPress={() => router.push('/game/math')} />
-      <Pressable style={getRect(125, 265, 90, 85)} onPress={() => router.push('/game/draw')} />
-      <Pressable style={getRect(230, 265, 90, 85)} onPress={() => router.push('/game/differences')} />
-
-      <Pressable style={getRect(20, 360, 90, 85)} onPress={() => router.push('/game/mazes')} />
-      <Pressable style={getRect(125, 360, 90, 85)} onPress={() => router.push('/game/music')} />
-      <Pressable style={getRect(230, 360, 90, 85)} onPress={() => router.push('/game/sorting')} />
-
-      <Pressable style={getRect(20, 465, 300, 65)} onPress={() => router.push('/adventure')} />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  root: { flex: 1, backgroundColor: '#eaf8d6' },
-  bg: { width: '100%', height: '100%', position: 'absolute' },
-});
+import { ArtworkScreen } from './artwork';
+export default function Categories(){const targets=[
+['back',7,12,50,52,'/'],['animals',20,72,100,94,'/levels'],['numbers',126,72,100,94,'/game/numbers'],['letters',232,72,100,94,'/game/letters'],
+['colors',20,172,100,94,'/game/colors'],['puzzles',126,172,100,94,'/game/puzzles'],['memory',232,172,100,94,'/game/memory'],
+['math',20,272,100,94,'/game/math'],['draw',126,272,100,94,'/game/draw'],['differences',232,272,100,94,'/game/differences'],
+['mazes',20,372,100,94,'/game/mazes'],['music',126,372,100,94,'/game/music'],['sorting',232,372,100,94,'/game/sorting'],['adventure',20,475,310,76,'/adventure']];
+return <ArtworkScreen source={require('../assets/categories-reference.png')} sourceW={350} sourceH={570} starBox={{x:265,y:15,w:68,h:38}} targets={targets.map(([id,x,y,w,h,path])=>({id:String(id),rect:{x:+x,y:+y,w:+w,h:+h},path:String(path)}))}/>}

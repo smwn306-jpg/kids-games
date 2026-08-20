@@ -1,17 +1,3 @@
-import { ArtworkScreen } from '../artwork';
-
-export default function MemoryGame() {
-  const targets = [
-    { id: 'back', rect: { x: 8, y: 12, w: 50, h: 52 }, path: '/categories' },
-  ];
-
-  return (
-    <ArtworkScreen
-      source={require('../../assets/memory-reference.png')}
-      sourceW={360}
-      sourceH={570}
-      starBox={{ x: 280, y: 15, w: 65, h: 38 }}
-      targets={targets}
-    />
-  );
-}
+import { useState } from 'react'; import {Pressable,Text,View} from 'react-native'; import {GameShell,Result} from './GameShell'; import {useAppProgress} from '../_layout';
+const base=['🐶','🐱','🦁','🐸'];
+export default function Memory(){const {addStars,gameCompleted}=useAppProgress();const [cards,setCards]=useState(()=>[...base,...base].sort(()=>Math.random()-.5).map((v,i)=>({id:i,v,open:false,matched:false})));const [first,setFirst]=useState<number|null>(null);const [moves,setMoves]=useState(0);const [done,setDone]=useState(false);const tap=(id:number)=>{if(done)return;const c=cards[id];if(c.open||c.matched||first===id)return;const opened=cards.map(x=>x.id===id?{...x,open:true}:x);setCards(opened);if(first===null){setFirst(id);return;}setMoves(m=>m+1);const a=cards[first];if(a.v===c.v){const matched=opened.map(x=>x.id===id||x.id===first?{...x,open:true,matched:true}:x);setCards(matched);setFirst(null);if(matched.every(x=>x.matched)){addStars(3);gameCompleted('memory');setDone(true)}}else{setTimeout(()=>{setCards(current=>current.map(x=>x.id===id||x.id===first?{...x,open:false}:x));setFirst(null)},550)}};return <GameShell title="זיכרון" emoji="🧠" score={cards.filter(c=>c.matched).length} total={cards.length}>{done?<Result title="משחק הזיכרון" score={moves} stars={3} againPath="/game/memory"/>:<><Text style={{textAlign:'center',fontSize:22,fontWeight:'900',marginTop:20}}>מצאו את כל הזוגות</Text><View style={{flexDirection:'row',flexWrap:'wrap',gap:10,justifyContent:'center',marginTop:25}}>{cards.map(c=><Pressable key={c.id} onPress={()=>tap(c.id)} style={{width:78,height:78,borderRadius:18,backgroundColor:c.open||c.matched?'#fff':'#8ba6e8',alignItems:'center',justifyContent:'center',borderWidth:3,borderColor:'#fff'}}><Text style={{fontSize:38}}>{c.open||c.matched?c.v:'⭐'}</Text></Pressable>)}</View><Text style={{textAlign:'center',marginTop:18,fontWeight:'800'}}>מהלכים: {moves}</Text></>}</GameShell>}

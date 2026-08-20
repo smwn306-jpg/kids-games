@@ -1,53 +1,5 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { useAppProgress } from './_layout';
-
-export default function Rewards() {
-  const { stars } = useAppProgress();
-  const rewards = [
-    ['🥇', 'כוכב ראשון', 1],
-    ['🏆', 'אלוף המשחקים', 10],
-    ['🎁', 'מתנת 20 כוכבים', 20],
-  ] as const;
-
-  return (
-    <View style={s.page}>
-      <Pressable onPress={() => router.back()}>
-        <Text style={s.back}>← חזרה</Text>
-      </Pressable>
-      <Text style={s.title}>המתנות שלי 🎁</Text>
-      <View style={s.star}>
-        <Text style={s.starText}>⭐ {stars}</Text>
-      </View>
-      {rewards.map(([e, t, n]) => (
-        <View key={t} style={s.card}>
-          <Text style={s.emoji}>{e}</Text>
-          <View style={s.info}>
-            <Text style={s.cardTitle}>{t}</Text>
-            <Text style={s.cardSub}>{n} כוכבים</Text>
-            <View style={s.track}>
-              <View style={[s.fill, { width: `${Math.min(100, (stars / n) * 100)}%` }]} />
-            </View>
-          </View>
-          <Text style={s.state}>{stars >= n ? '✓' : '🔒'}</Text>
-        </View>
-      ))}
-    </View>
-  );
-}
-
-const s = StyleSheet.create({
-  page: { flex: 1, backgroundColor: '#e6f7ff', padding: 20 },
-  back: { fontSize: 20, fontWeight: '900', color: '#3d7893' },
-  title: { fontSize: 32, fontWeight: '900', color: '#36525e', textAlign: 'center', marginTop: 10 },
-  star: { alignSelf: 'center', marginTop: 15, backgroundColor: '#fff2a7', borderRadius: 24, paddingHorizontal: 22, paddingVertical: 10 },
-  starText: { fontSize: 20, fontWeight: '900', color: '#6d5a20' },
-  card: { backgroundColor: '#fff', borderRadius: 24, padding: 16, marginTop: 14, flexDirection: 'row', alignItems: 'center', gap: 12 },
-  emoji: { fontSize: 45 },
-  info: { flex: 1 },
-  cardTitle: { fontSize: 18, fontWeight: '900', color: '#42535a' },
-  cardSub: { color: '#819097', marginTop: 3 },
-  track: { height: 9, backgroundColor: '#e3eaed', borderRadius: 6, marginTop: 8, overflow: 'hidden' },
-  fill: { height: '100%', backgroundColor: '#7ac632' },
-  state: { fontSize: 24 },
-});
+export default function Rewards(){const{stars}=useAppProgress();const rewards=[['🥇','כוכב ראשון',1],['🏆','אלוף המשחקים',10],['🎁','מתנת 20 כוכבים',20]] as const;return <View style={s.page}><Pressable onPress={()=>router.back()}><Text style={s.back}>← חזרה</Text></Pressable><Text style={s.title}>המתנות שלי 🎁</Text><View style={s.star}><Text style={s.starText}>⭐ {stars}</Text></View>{rewards.map(([e,t,n])=><View key={t} style={s.card}><Text style={s.emoji}>{e}</Text><View style={s.info}><Text style={s.cardTitle}>{t}</Text><Text style={s.cardSub}>{n} כוכבים</Text><View style={s.track}><View style={[s.fill,{width:`${Math.min(100,stars/n*100)}%`}]} /></View></View><Text style={s.state}>{stars>=n?'✓':'🔒'}</Text></View>)}</View>}
+const s=StyleSheet.create({page:{flex:1,backgroundColor:'#e6f7ff',padding:20},back:{fontSize:20,fontWeight:'900',color:'#3d7893'},title:{fontSize:32,fontWeight:'900',color:'#36525e',textAlign:'center',marginTop:10},star:{alignSelf:'center',marginTop:15,backgroundColor:'#fff2a7',borderRadius:24,paddingHorizontal:22,paddingVertical:10},starText:{fontSize:20,fontWeight:'900',color:'#6d5a20'},card:{backgroundColor:'#fff',borderRadius:24,padding:16,marginTop:14,flexDirection:'row',alignItems:'center',gap:12},emoji:{fontSize:45},info:{flex:1},cardTitle:{fontSize:18,fontWeight:'900',color:'#42535a'},cardSub:{color:'#819097',marginTop:3},track:{height:9,backgroundColor:'#e3eaed',borderRadius:6,marginTop:8,overflow:'hidden'},fill:{height:'100%',backgroundColor:'#7ac632'},state:{fontSize:24}});
