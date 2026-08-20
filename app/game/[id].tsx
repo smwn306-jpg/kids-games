@@ -1,33 +1,42 @@
-import { useLocalSearchParams } from 'expo-router';
-import AnimalsGame from '../animals';
-import ColorsGame from '../colors';
-import DifferencesGame from '../differences';
-import DrawGame from '../draw';
-import LettersGame from '../letters';
-import MathGame from '../math';
-import MazesGame from '../mazes';
-import MemoryGame from '../memory';
-import MusicGame from '../music';
-import NumbersGame from '../numbers';
-import PuzzlesGame from '../puzzles';
-import SortingGame from '../sorting';
+import { useLocalSearchParams, useRouter } from 'expo-router';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 
-export default function GameRouter() {
+export default function DynamicGame() {
   const { id } = useLocalSearchParams<{ id: string }>();
+  const router = useRouter();
 
-  switch (id) {
-    case 'animals': return <AnimalsGame />;
-    case 'colors': return <ColorsGame />;
-    case 'differences': return <DifferencesGame />;
-    case 'draw': return <DrawGame />;
-    case 'letters': return <LettersGame />;
-    case 'math': return <MathGame />;
-    case 'mazes': return <MazesGame />;
-    case 'memory': return <MemoryGame />;
-    case 'music': return <MusicGame />;
-    case 'numbers': return <NumbersGame />;
-    case 'puzzles': return <PuzzlesGame />;
-    case 'sorting': return <SortingGame />;
-    default: return <AnimalsGame />;
-  }
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>משחק: {id}</Text>
+      
+      <Pressable style={styles.btn} onPress={() => router.back()}>
+        <Text style={styles.btnText}>חזרה</Text>
+      </Pressable>
+    </View>
+  );
 }
+
+const styles = StyleSheet.create({
+  container: { 
+    flex: 1, 
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    backgroundColor: '#fff' 
+  },
+  title: { 
+    fontSize: 24, 
+    fontWeight: 'bold', 
+    marginBottom: 20 
+  },
+  btn: { 
+    paddingVertical: 12, 
+    paddingHorizontal: 24, 
+    backgroundColor: '#007AFF', 
+    borderRadius: 8 
+  },
+  btnText: { 
+    color: '#fff', 
+    fontSize: 16, 
+    fontWeight: 'bold' 
+  },
+});
