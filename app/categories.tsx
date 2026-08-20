@@ -23,11 +23,9 @@ export default function Categories() {
         resizeMode="stretch"
       />
 
-      {/* כפתור חזרה */}
       <Pressable style={getRect(10, 10, 50, 40)} onPress={() => router.back()} />
 
-      {/* 12 הקטגוריות */}
-      <Pressable style={getRect(20, 75, 90, 85)} onPress={() => router.push('/game/animals')} />
+      <Pressable style={getRect(20, 75, 90, 85)} onPress={() => router.push('/levels')} />
       <Pressable style={getRect(125, 75, 90, 85)} onPress={() => router.push('/game/numbers')} />
       <Pressable style={getRect(230, 75, 90, 85)} onPress={() => router.push('/game/letters')} />
 
@@ -43,7 +41,6 @@ export default function Categories() {
       <Pressable style={getRect(125, 360, 90, 85)} onPress={() => router.push('/game/music')} />
       <Pressable style={getRect(230, 360, 90, 85)} onPress={() => router.push('/game/sorting')} />
 
-      {/* באנר מסע ההרפתקה */}
       <Pressable style={getRect(20, 465, 300, 65)} onPress={() => router.push('/adventure')} />
     </View>
   );
