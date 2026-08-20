@@ -1,3 +1,38 @@
-import {Text,View} from 'react-native';import {GameShell,Result,Choice,useRoundGame} from './GameShell';
-const qs=[['2 + 1 =','3',['3','4','2','5']],['3 + 2 =','5',['4','5','6','7']],['5 - 2 =','3',['2','3','4','5']],['4 + 3 =','7',['6','7','8','9']],['8 - 3 =','5',['4','5','6','7']]];
-export default function MathGame(){const g=useRoundGame(5,i=>qs[i][1],i=>qs[i][2]);return <GameShell title="חשבון" emoji="➕" score={g.stars} total={5}>{g.finished?<Result title="משחק החשבון" score={g.stars} stars={g.stars>=5?3:g.stars>=3?2:1}  againPath="/game/math"/>:<><View style={{backgroundColor:'#fff',borderRadius:28,alignItems:'center',padding:30,marginTop:25}}><Text style={{fontSize:34,fontWeight:'900',color:'#5f74c7'}}>{qs[g.round][0]}</Text></View><View style={{marginTop:20}}>{g.options.map(o=><Choice key={o} label={o} selected={g.selected===o} correct={o===qs[g.round][1]} onPress={()=>g.choose(o)}/>)}</View>{g.selected&&<Text onPress={g.next} style={{textAlign:'center',fontSize:20,fontWeight:'900',padding:12}}>המשך ←</Text>}</>}</GameShell>}
+import { Text, View } from 'react-native';
+import { GameShell, Result, Choice, useRoundGame } from './GameShell';
+
+const qs = [
+  ['2 + 1 =', '3', ['3', '4', '2', '5']],
+  ['3 + 2 =', '5', ['4', '5', '6', '7']],
+  ['5 - 2 =', '3', ['2', '3', '4', '5']],
+  ['4 + 3 =', '7', ['6', '7', '8', '9']],
+  ['8 - 3 =', '5', ['4', '5', '6', '7']],
+];
+
+export default function MathGame() {
+  const g = useRoundGame(5, i => qs[i][1], i => qs[i][2], 'math');
+
+  return (
+    <GameShell title="חשבון" emoji="➕" score={g.stars} total={5}>
+      {g.finished ? (
+        <Result title="משחק החשבון" score={g.stars} stars={g.stars >= 5 ? 3 : g.stars >= 3 ? 2 : 1} againPath="/game/math" />
+      ) : (
+        <>
+          <View style={{ backgroundColor: '#fff', borderRadius: 28, alignItems: 'center', padding: 30, marginTop: 25 }}>
+            <Text style={{ fontSize: 34, fontWeight: '900', color: '#5f74c7' }}>{qs[g.round][0]}</Text>
+          </View>
+          <View style={{ marginTop: 20 }}>
+            {g.options.map(o => (
+              <Choice key={o} label={o} selected={g.selected === o} correct={o === qs[g.round][1]} onPress={() => g.choose(o)} />
+            ))}
+          </View>
+          {g.selected && (
+            <Text onPress={g.next} style={{ textAlign: 'center', fontSize: 20, fontWeight: '900', padding: 12 }}>
+              המשך ←
+            </Text>
+          )}
+        </>
+      )}
+    </GameShell>
+  );
+}
