@@ -1,20 +1,4 @@
-import { router } from 'expo-router';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-
-export default function DrawScreen() {
-  return (
-    <SafeAreaView style={s.safe}>
-      <View style={s.page}>
-        <Pressable onPress={() => router.back()}><Text style={s.back}>← חזרה</Text></Pressable>
-        <Text style={s.icon}>🎨</Text>
-        <Text style={s.title}>ציור וצביעה</Text>
-        <View style={s.card}>
-          <Text style={s.big}>בקרוב!</Text>
-          <Text style={s.text}>מסך הצביעה מוכן לחיבור לגרפיקה המקורית ולמשחק הצביעה.</Text>
-        </View>
-      </View>
-    </SafeAreaView>
-  );
-}
-const s=StyleSheet.create({safe:{flex:1,backgroundColor:'#fff7e4'},page:{padding:20,alignItems:'center'},back:{alignSelf:'flex-start',fontSize:18,fontWeight:'900',color:'#55717c'},icon:{fontSize:72,marginTop:45},title:{fontSize:32,fontWeight:'900',color:'#3d4c55',marginTop:10},card:{marginTop:30,width:'100%',backgroundColor:'#fff',borderRadius:25,padding:25,alignItems:'center'},big:{fontSize:25,fontWeight:'900'},text:{fontSize:16,color:'#66757b',textAlign:'center',marginTop:12,lineHeight:22}});
+import {useState} from 'react';import {Pressable,StyleSheet,Text,View} from 'react-native';import {router} from 'expo-router';import {useAppProgress} from '../_layout';
+const colors=['#e44b4b','#f29c32','#f1d24b','#6dbb55','#4b9fd1','#8769c9','#7c5a42','#333'];
+export default function Draw(){const{addStars,gameCompleted}=useAppProgress();const[c,setC]=useState(colors[0]);const[cells,setCells]=useState<string[]>(Array(24).fill('#fff'));const[done,setDone]=useState(false);const paint=(i:number)=>setCells(a=>a.map((x,j)=>j===i?c:x));const finish=()=>{if(done)return;addStars(2);gameCompleted('draw');setDone(true)};return <View style={s.page}><Pressable onPress={()=>router.back()}><Text style={s.back}>← חזרה</Text></Pressable><Text style={s.title}>ציור וצביעה 🎨</Text><View style={s.palette}>{colors.map(x=><Pressable key={x} onPress={()=>setC(x)} style={[s.dot,{backgroundColor:x,borderColor:c===x?'#333':'#fff'}]}/>)}</View><View style={s.canvas}>{cells.map((x,i)=><Pressable key={i} onPress={()=>paint(i)} style={[s.cell,{backgroundColor:x}]}/>)}</View>{done?<Text style={s.good}>כל הכבוד! ⭐⭐</Text>:<Pressable style={s.button} onPress={finish}><Text style={s.buttonText}>סיימתי!</Text></Pressable>}</View>}
+const s=StyleSheet.create({page:{flex:1,backgroundColor:'#dff5ff',padding:18},back:{fontSize:20,fontWeight:'900',color:'#3c7893'},title:{fontSize:30,fontWeight:'900',textAlign:'center',color:'#3d5d69'},palette:{flexDirection:'row',justifyContent:'center',gap:8,marginTop:18,flexWrap:'wrap'},dot:{width:34,height:34,borderRadius:17,borderWidth:3},canvas:{width:'100%',maxWidth:390,aspectRatio:1,alignSelf:'center',marginTop:18,flexDirection:'row',flexWrap:'wrap',backgroundColor:'#fff',padding:6,borderRadius:25},cell:{width:'16.66%',height:'16.66%',borderWidth:1,borderColor:'#ddd',borderRadius:5},button:{alignSelf:'center',marginTop:18,backgroundColor:'#7bc92e',paddingHorizontal:35,paddingVertical:14,borderRadius:22},buttonText:{color:'#fff',fontWeight:'900',fontSize:20},good:{textAlign:'center',fontSize:24,fontWeight:'900',color:'#5a9c2b',marginTop:20}});

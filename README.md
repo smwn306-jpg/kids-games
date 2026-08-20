@@ -1,31 +1,18 @@
-# Kids Games World
+# Kids Games App — V11
 
-A React Native / Expo starter that is being upgraded from the existing project rather than rebuilt from scratch.
-
-## Current status
-- Existing navigation and game structure preserved.
-- Home Screen upgraded to use the supplied approved artwork as the visual source of truth.
-- Emoji/placeholder Home artwork removed.
-- Real transparent hit targets keep Home controls interactive.
-- Existing category, adventure, achievement, settings, parent and animal-game routes are preserved.
+This version continues the existing project. It is not a fresh rebuild.
 
 ## Run
-```bash
 npm install
-npx expo start
-```
+npx expo start -c
 
-For web:
-```bash
-npm run web
-```
+## Main flow
+Home → Categories → Adventure → Levels → Animals
 
-## Design source
-The Home artwork was extracted from the supplied design collage and stored under `assets/home-screen-source.png`.
+All 12 categories have a real route and game implementation.
 
-## Next steps
-1. Integrate the approved Category screen artwork.
-2. Integrate the Adventure Map artwork.
-3. Integrate the Animals Level Select artwork.
-4. Replace remaining emoji/placeholders screen by screen.
-5. Keep gameplay logic and navigation intact while upgrading visuals.
+## Progress
+The in-memory progress provider starts with 0 stars and 0 games played for a fresh app session. Completing a game awards stars and marks the category complete.
+
+## Design source of truth
+The original reference artwork is stored in `assets/` and is used directly on the main navigation screens.
