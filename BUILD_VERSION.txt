@@ -1,2 +1,7 @@
-Kids Games App - V11
-Full app continuation build
+V12
+Continuation build from V11
+- Added web persistence for progress
+- Improved level unlocking and level-aware animals route
+- Fixed numbers question data/answer logic
+- Fixed memory completion/state handling
+- Preserved original artwork and existing navigation
