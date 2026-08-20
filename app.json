@@ -1,0 +1,1 @@
+{"expo":{"name":"עולם המשחקים","slug":"kids-games-world","version":"1.0.0","orientation":"portrait","userInterfaceStyle":"light","scheme":"kidsgames","plugins":["expo-router"],"android":{"package":"com.kidsgames.world"},"ios":{"bundleIdentifier":"com.kidsgames.world"}}}
