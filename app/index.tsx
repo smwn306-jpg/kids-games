@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <SafeAreaView style={styles.safeArea}>
       <ImageBackground 
-        source={require('../assets/images/home-bg.png')} 
+        source={require('../assets/home-screen-source.png')} 
         style={styles.background} 
         resizeMode="cover"
       >
