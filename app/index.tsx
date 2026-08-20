@@ -1,49 +1,10 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, ImageBackground, StyleSheet } from 'react-native';
-import { useRouter } from 'expo-router';
-import { SafeAreaView } from 'react-native-safe-area-context';
-
-export default function Home() {
-  const router = useRouter();
-
-  return (
-    <SafeAreaView style={styles.safeArea}>
-      <ImageBackground 
-        source={require('../assets/home-screen-source.png')} 
-        style={styles.background} 
-        resizeMode="cover"
-      >
-        <View style={styles.header}>
-          <View style={styles.badge}><Text style={styles.badgeText}>⭐ 4</Text></View>
-          <View style={styles.badge}><Text style={styles.badgeText}>🎁</Text></View>
-        </View>
-
-        <View style={styles.content}>
-          <TouchableOpacity style={styles.mainBtn} onPress={() => router.push('/categories')}>
-            <Text style={styles.mainBtnText}>🎮 התחל לשחק</Text>
-          </TouchableOpacity>
-
-          <View style={styles.row}>
-            <TouchableOpacity style={styles.subBtn}><Text style={styles.subBtnText}>🏆 הישגים</Text></TouchableOpacity>
-            <TouchableOpacity style={styles.subBtn}><Text style={styles.subBtnText}>📖 ללמוד</Text></TouchableOpacity>
-            <TouchableOpacity style={styles.subBtn}><Text style={styles.subBtnText}>🎨 יצירה</Text></TouchableOpacity>
-          </View>
-        </View>
-      </ImageBackground>
-    </SafeAreaView>
-  );
-}
-
-const styles = StyleSheet.create({
-  safeArea: { flex: 1, backgroundColor: '#8cd26c' },
-  background: { flex: 1, width: '100%', height: '100%', justifyContent: 'space-between', padding: 20 },
-  header: { flexDirection: 'row-reverse', justifyContent: 'space-between', marginTop: 10 },
-  badge: { backgroundColor: '#fff', borderRadius: 20, paddingHorizontal: 12, paddingVertical: 6 },
-  badgeText: { fontSize: 18, fontWeight: 'bold' },
-  content: { alignItems: 'center', marginBottom: 40 },
-  mainBtn: { backgroundColor: '#7ed321', paddingHorizontal: 40, paddingVertical: 15, borderRadius: 30, marginBottom: 20, width: '80%', alignItems: 'center' },
-  mainBtnText: { fontSize: 24, color: '#fff', fontWeight: 'bold' },
-  row: { flexDirection: 'row-reverse', justifyContent: 'space-around', width: '100%' },
-  subBtn: { backgroundColor: '#fff', padding: 12, borderRadius: 15, minWidth: 90, alignItems: 'center' },
-  subBtnText: { fontSize: 16, fontWeight: 'bold' },
-});
+import { Image, Pressable, StyleSheet, View, useWindowDimensions } from 'react-native';
+import { router } from 'expo-router';
+import { useAppProgress } from './_layout';
+import { StarCountOverlay } from './components';
+const W=347,H=557;
+export default function Home(){const {width,height}=useWindowDimensions();const {stars}=useAppProgress();const sx=width/W,sy=height/H;const r=(x:number,y:number,w:number,h:number)=>({position:'absolute' as const,left:x*sx,top:y*sy,width:w*sx,height:h*sy});
+return <View style={styles.root}><Image source={require('../assets/home-screen-source.png')} resizeMode="stretch" style={[StyleSheet.absoluteFillObject, { width: '100%', height: '100%' }]} pointerEvents="none"/>
+<StarCountOverlay stars={stars} scaleX={sx} scaleY={sy} x={68} y={10} width={92} height={44}/>
+<Pressable style={r(68,350,204,68)} onPress={()=>router.push('/categories')}/><Pressable style={r(276,10,65,66)} onPress={()=>router.push('/rewards')}/><Pressable style={r(57,421,76,72)} onPress={()=>router.push('/achievements')}/><Pressable style={r(135,421,76,72)} onPress={()=>router.push('/categories')}/><Pressable style={r(214,421,76,72)} onPress={()=>router.push('/game/draw')}/><Pressable style={r(10,495,116,60)} onPress={()=>router.push('/settings')}/><Pressable style={r(126,495,95,60)} onPress={()=>router.replace('/')}/><Pressable style={r(218,495,127,60)} onPress={()=>router.push('/parent')}/></View>}
+const styles=StyleSheet.create({root:{flex:1,backgroundColor:'#eaf8d6'}});

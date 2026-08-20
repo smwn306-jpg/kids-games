@@ -1,16 +1,16 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-export function StarCountOverlay({ stars, scale = 1, x = 75, y = 25, width = 70, height = 36 }: { stars: number; scale?: number; x?: number; y?: number; width?: number; height?: number }) {
+export function StarCountOverlay({ stars, scaleX = 1, scaleY = 1, x = 75, y = 25, width = 70, height = 36 }: { stars: number; scaleX?: number; scaleY?: number; x?: number; y?: number; width?: number; height?: number }) {
   return (
     <View pointerEvents="none" style={[styles.starOverlay, {
-      left: x * scale,
-      top: y * scale,
-      width: width * scale,
-      height: height * scale,
-      borderRadius: 13 * scale,
+      left: x * scaleX,
+      top: y * scaleY,
+      width: width * scaleX,
+      height: height * scaleY,
+      borderRadius: 13 * Math.min(scaleX, scaleY),
     }]}> 
-      <Text style={[styles.star, { fontSize: 18 * scale }]}>⭐</Text>
-      <Text style={[styles.number, { fontSize: 15 * scale }]}>{stars}</Text>
+      <Text style={[styles.star, { fontSize: 18 * Math.min(scaleX, scaleY) }]}>⭐</Text>
+      <Text style={[styles.number, { fontSize: 15 * Math.min(scaleX, scaleY) }]}>{stars}</Text>
     </View>
   );
 }
