@@ -1,3 +1,15 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native'; import {router} from 'expo-router'; import {useState} from 'react';
-export default function Room(){const[shirt,setShirt]=useState('🟢');const[hat,setHat]=useState('');return <View style={s.page}><Pressable onPress={()=>router.back()}><Text style={s.back}>← חזרה</Text></Pressable><Text style={s.title}>החדר שלי</Text><View style={s.room}><Text style={s.avatar}>{hat}👦</Text><Text style={{fontSize:55}}>{shirt}</Text></View><Text style={s.section}>בחרו אביזר</Text><View style={s.row}>{['','🎩','👑','🧢'].map(x=><Pressable key={x||'none'} onPress={()=>setHat(x)} style={s.item}><Text style={{fontSize:35}}>{x||'❌'}</Text></Pressable>)}</View><Text style={s.section}>בחרו חולצה</Text><View style={s.row}>{['🔵','🟢','🟡','🟣'].map(x=><Pressable key={x} onPress={()=>setShirt(x)} style={s.item}><Text style={{fontSize:35}}>{x}</Text></Pressable>)}</View></View>}
-const s=StyleSheet.create({page:{flex:1,backgroundColor:'#e6f6ff',padding:20},back:{fontSize:20,fontWeight:'900',color:'#3d7893'},title:{fontSize:34,fontWeight:'900',textAlign:'center',color:'#3e5963'},room:{marginTop:18,backgroundColor:'#fff',borderRadius:30,alignItems:'center',justifyContent:'center',height:260},avatar:{fontSize:100},section:{fontSize:20,fontWeight:'900',color:'#52656d',marginTop:18},row:{flexDirection:'row',gap:12,marginTop:10},item:{width:70,height:70,borderRadius:20,backgroundColor:'#fff',alignItems:'center',justifyContent:'center'}});
+import { ArtworkScreen } from './artwork';
+import { router } from 'expo-router';
+
+export default function Room(){
+  return <ArtworkScreen
+    source={require('../assets/room-reference.png')}
+    sourceW={235} sourceH={454}
+    starBox={{x:165,y:32,w:58,h:30}}
+    targets={[
+      {id:'back',rect:{x:7,y:10,w:42,h:42},path:'/home'},
+      {id:'previous',rect:{x:8,y:170,w:45,h:65},action:()=>router.back()},
+      {id:'next',rect:{x:180,y:170,w:45,h:65},action:()=>router.back()},
+    ]}
+  />;
+}

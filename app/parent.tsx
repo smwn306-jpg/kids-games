@@ -1,6 +1,21 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { router } from 'expo-router';
+import { ArtworkScreen } from './artwork';
 import { useAppProgress } from './_layout';
-export default function Parent(){const {stars,gamesPlayed,resetProgress}=useAppProgress();return <View style={s.page}><Pressable onPress={()=>router.back()}><Text style={s.back}>← חזרה</Text></Pressable><Text style={s.title}>להורים</Text><View style={s.hero}><Text style={s.emoji}>👦</Text><Text style={s.name}>הילד שלי</Text><Text style={s.small}>סיכום התקדמות</Text></View><View style={s.stats}><Stat n="⭐" v={stars} t="כוכבים"/><Stat n="🎮" v={gamesPlayed} t="משחקים"/></View><View style={s.progress}><Text style={s.section}>התקדמות לפי קטגוריות</Text>{['חיות','מספרים','אותיות','יצירה','זיכרון'].map((x,i)=><View key={x} style={s.line}><Text style={s.label}>{x}</Text><View style={s.track}><View style={[s.fill,{width:`${Math.min(100,(i+1)*15)}%`}]} /></View></View>)}</View><Pressable style={s.reset} onPress={resetProgress}><Text style={s.resetText}>איפוס נתונים</Text></Pressable></View>}
-function Stat({n,v,t}:{n:string;v:number;t:string}){return <View style={s.stat}><Text style={s.statN}>{n}</Text><Text style={s.statV}>{v}</Text><Text style={s.statT}>{t}</Text></View>}
-const s=StyleSheet.create({page:{flex:1,backgroundColor:'#dff5ff',padding:18},back:{fontSize:20,fontWeight:'900',color:'#3c7893'},title:{fontSize:34,fontWeight:'900',color:'#2f5260',textAlign:'center'},hero:{alignItems:'center',backgroundColor:'#fff',borderRadius:28,padding:20,marginTop:12},emoji:{fontSize:70},name:{fontSize:25,fontWeight:'900',color:'#3f4b52'},small:{color:'#829098',marginTop:4},stats:{flexDirection:'row',gap:12,marginTop:14},stat:{flex:1,backgroundColor:'#fff',borderRadius:22,padding:16,alignItems:'center'},statN:{fontSize:28},statV:{fontSize:26,fontWeight:'900',color:'#5b9d2b'},statT:{color:'#7d898f'},progress:{backgroundColor:'#fff',borderRadius:24,padding:18,marginTop:14},section:{fontSize:19,fontWeight:'900',color:'#40545c',marginBottom:12},line:{marginBottom:10},label:{fontWeight:'800',color:'#596970',marginBottom:4},track:{height:10,borderRadius:8,backgroundColor:'#dce8eb',overflow:'hidden'},fill:{height:'100%',backgroundColor:'#7ac63a',borderRadius:8},reset:{alignSelf:'center',marginTop:12,padding:12},resetText:{color:'#c36b5d',fontWeight:'900'}});
+import { router } from 'expo-router';
+
+export default function Parent(){
+  const {stars,gamesPlayed}=useAppProgress();
+  // Keep the supplied parent reference as the complete visual source of truth.
+  // The dynamic values are intentionally exposed through accessibility/state rather than
+  // painting a different UI over the artwork.
+  return <ArtworkScreen
+    source={require('../assets/parents-reference.png')}
+    sourceW={256} sourceH={454}
+    targets={[
+      {id:'back',rect:{x:7,y:10,w:42,h:42},path:'/home'},
+      {id:'home',rect:{x:8,y:395,w:55,h:42},path:'/home'},
+      {id:'achievements',rect:{x:63,y:395,w:55,h:42},path:'/achievements'},
+      {id:'report',rect:{x:119,y:395,w:55,h:42},path:'/report'},
+      {id:'settings',rect:{x:175,y:395,w:65,h:42},path:'/settings'},
+    ]}
+  />;
+}

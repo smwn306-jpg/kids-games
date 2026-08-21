@@ -1,18 +1,28 @@
-# Kids Games App — V11
+# Kids Games World — v17
 
-This version continues the existing project. It is not a fresh rebuild.
+Expo Router + React Native + TypeScript.
 
 ## Run
+```bash
 npm install
 npx expo start -c
+```
 
-## Main flow
-Home → Categories → Adventure → Levels → Animals
+## Design rule
+The supplied reference images are the visual source of truth. Existing reference artwork and supplied assets should be reused before creating replacements.
 
-All 12 categories have a real route and game implementation.
+## V17 polish
+- Live star counters use the original reference badge artwork.
+- Result screens use a star-only crop from the same supplied artwork.
+- Draw and Memory completion flows are wired without replacing the reference artwork.
 
-## Progress
-The in-memory progress provider starts with 0 stars and 0 games played for a fresh app session. Completing a game awards stars and marks the category complete.
 
-## Design source of truth
-The original reference artwork is stored in `assets/` and is used directly on the main navigation screens.
+### Audio / Voice
+V19 adds optional Hebrew text-to-speech for the learning experience. Speech is enabled by default, can be turned off in Settings, and uses the device's available Hebrew voice. On Expo SDK 54 the project uses `expo-speech` ~14.0.8.
+
+
+### V21 profile launch behavior
+On every fresh app launch, if profiles exist, the app opens the profile picker first. The previously selected profile is remembered and marked, but is never auto-entered. Up to 6 child profiles are supported.
+
+### Welcome animation
+The welcome screen uses `assets/welcome-animated.gif`, generated from the approved welcome artwork, with a subtle breathing/bobbing mascot animation and Hebrew welcome voice.
