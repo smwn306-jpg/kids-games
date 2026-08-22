@@ -1,4 +1,4 @@
-import { ArtworkScreen } from './artwork';
+import { ArtworkScreen } from '../src/ui/ArtworkScreen';
 import { useAppProgress } from './_layout';
 import { router } from 'expo-router';
 

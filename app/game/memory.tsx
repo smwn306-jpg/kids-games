@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Image, View } from 'react-native';
-import { ArtworkScreen } from '../artwork';
-import { useAppProgress } from '../_layout';
+import { ArtworkScreen } from '../../src/ui/ArtworkScreen';
+import { useAppProgress } from '../../app/_layout';
 import { router } from 'expo-router';
 import { useEffect } from 'react';
-import { speakHebrew } from '../voice';
+import { speakHebrew } from '../../src/voice';
 
 const W=250,H=454;
 const cards=['star','crab','dolphin','crab','star','dolphin','dolphin','star','crab'];

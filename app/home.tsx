@@ -1,7 +1,7 @@
 import { Image, Pressable, StyleSheet, View, useWindowDimensions } from 'react-native';
 import { router } from 'expo-router';
 import { useAppProgress } from './_layout';
-import { StarCountOverlay } from './components';
+import { StarCountOverlay } from '../src/ui/components';
 const W=360,H=570;
 export default function Home(){
  const {width,height}=useWindowDimensions(); const {stars,profilesReady,profiles,selectedProfileId}=useAppProgress();

@@ -1,4 +1,4 @@
-import { ArtworkScreen } from './artwork';
+import { ArtworkScreen } from '../src/ui/ArtworkScreen';
 export default function Achievements(){
   return <ArtworkScreen
     source={require('../assets/achievements-reference.png')}

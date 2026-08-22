@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {Image,Text,View,Pressable} from 'react-native';
-import {GameShell,Result} from './GameShell';
-import {useAppProgress} from '../_layout';
+import {GameShell,Result} from '../../src/game/GameShell';
+import {useAppProgress} from '../../app/_layout';
 const target=['zebra','giraffe','lion'];
 const assets={zebra:require('../../assets/animal-zebra.png'),giraffe:require('../../assets/animal-giraffe.png'),lion:require('../../assets/animal-lion.png')};
 export default function Puzzles(){

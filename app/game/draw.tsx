@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { View } from 'react-native';
-import { ArtworkScreen } from '../artwork';
-import { useAppProgress } from '../_layout';
+import { ArtworkScreen } from '../../src/ui/ArtworkScreen';
+import { useAppProgress } from '../../app/_layout';
 import { router } from 'expo-router';
 import { useEffect } from 'react';
-import { speakHebrew } from '../voice';
+import { speakHebrew } from '../../src/voice';
 
 const W=250,H=454;
 const colors=['#e44b4b','#f29c32','#f1d24b','#6dbb55','#4b9fd1','#8769c9','#7c5a42','#333'];

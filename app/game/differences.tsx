@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Image, Text, View, Pressable } from 'react-native';
-import { GameShell, Result } from './GameShell';
-import { useAppProgress } from '../_layout';
+import { GameShell, Result } from '../../src/game/GameShell';
+import { useAppProgress } from '../../app/_layout';
 
 const spots=[0,1,2,3,4,5] as const;
 const animals=[

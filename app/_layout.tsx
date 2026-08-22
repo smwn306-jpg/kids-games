@@ -2,7 +2,7 @@ import { Stack } from 'expo-router';
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import type { ChildProfile } from './profile-types';
+import type { ChildProfile } from '../src/profile-types';
 
 export type AppProgress = { stars:number; gamesPlayed:number; completed:Set<string>; voiceEnabled:boolean };
 type Ctx=AppProgress & {
@@ -11,21 +11,13 @@ type Ctx=AppProgress & {
   createProfile:(name:string,avatar:string,color:string)=>Promise<string>; selectProfile:(id:string)=>Promise<void>; deleteProfile:(id:string)=>Promise<void>;
 };
 const C=createContext<Ctx|null>(null);
-const KEY='kids-games-progress-v12';
 const PROFILE_KEY='kids-games-profiles-v1';
 const SELECTED_KEY='kids-games-selected-profile-v1';
 
-function defaultProgress(): AppProgress { return {stars:0,gamesPlayed:0,completed:new Set(),voiceEnabled:true}; }
-function loadWebProgress(): AppProgress {
-  try { if(typeof globalThis.localStorage==='undefined') return defaultProgress(); const raw=globalThis.localStorage.getItem(KEY); if(!raw)return defaultProgress(); const x=JSON.parse(raw); return {stars:Number(x.stars)||0,gamesPlayed:Number(x.gamesPlayed)||0,completed:new Set(Array.isArray(x.completed)?x.completed:[]),voiceEnabled:x.voiceEnabled!==false}; } catch { return defaultProgress(); }
-}
-
 export default function Layout(){
- const saved=loadWebProgress();
- const [stars,setStars]=useState(saved.stars),[gamesPlayed,setGamesPlayed]=useState(saved.gamesPlayed),[completed,setCompleted]=useState<Set<string>>(saved.completed),[voiceEnabled,setVoiceEnabled]=useState(saved.voiceEnabled);
+ const [stars,setStars]=useState(0),[gamesPlayed,setGamesPlayed]=useState(0),[completed,setCompleted]=useState<Set<string>>(new Set()),[voiceEnabled,setVoiceEnabled]=useState(true);
  const [profiles,setProfiles]=useState<ChildProfile[]>([]),[selectedProfileId,setSelectedProfileId]=useState<string|null>(null),[profilesReady,setProfilesReady]=useState(false);
  useEffect(()=>{ (async()=>{ try { const p=await AsyncStorage.getItem(PROFILE_KEY); if(p) setProfiles(JSON.parse(p)); } catch {} finally { setProfilesReady(true); } })(); },[]);
- useEffect(()=>{try{if(typeof globalThis.localStorage!=='undefined')globalThis.localStorage.setItem(KEY,JSON.stringify({stars,gamesPlayed,completed:[...completed],voiceEnabled}));}catch{}},[stars,gamesPlayed,completed,voiceEnabled]);
  useEffect(()=>{ const active=profiles.find(p=>p.id===selectedProfileId); if(!active)return; setStars(active.stars); setGamesPlayed(active.gamesPlayed); setCompleted(new Set(active.completed ?? [])); },[selectedProfileId]);
  useEffect(()=>{ if(!profilesReady || !selectedProfileId)return; const active=profiles.find(p=>p.id===selectedProfileId); if(!active)return; const next=profiles.map(p=>p.id===selectedProfileId?{...p,stars,gamesPlayed,completed:[...completed]}:p); AsyncStorage.setItem(PROFILE_KEY,JSON.stringify(next)).catch(()=>{}); },[stars,gamesPlayed,profilesReady,selectedProfileId]);
  const value=useMemo(()=>({

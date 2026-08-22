@@ -1,4 +1,4 @@
-import { ArtworkScreen } from './artwork';
+import { ArtworkScreen } from '../src/ui/ArtworkScreen';
 export default function Categories(){const targets=[
 ['back',7,12,50,52,'/home'],['animals',20,72,100,94,'/levels'],['numbers',126,72,100,94,'/game/numbers'],['letters',232,72,100,94,'/game/letters'],
 ['colors',20,172,100,94,'/game/colors'],['puzzles',126,172,100,94,'/game/puzzles'],['memory',232,172,100,94,'/game/memory'],

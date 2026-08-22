@@ -1,7 +1,7 @@
 import { Image, Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 import { router } from 'expo-router';
 import { useAppProgress } from './_layout';
-import { StarCountOverlay } from './components';
+import { StarCountOverlay } from '../src/ui/components';
 const W=441,H=570;
 export default function Levels(){
  const {width,height}=useWindowDimensions(); const {stars}=useAppProgress(); const sx=width/W,sy=height/H;

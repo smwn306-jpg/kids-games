@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useLocalSearchParams, router } from 'expo-router';
-import { ArtworkScreen } from '../artwork';
-import { useAppProgress } from '../_layout';
-import { speakHebrew, stopSpeech } from '../voice';
+import { ArtworkScreen } from '../../src/ui/ArtworkScreen';
+import { useAppProgress } from '../../app/_layout';
+import { speakHebrew, stopSpeech } from '../../src/voice';
 
 const W = 285, H = 454;
 const answers = ['ג׳ירפה','פיל','אריה','זברה'];

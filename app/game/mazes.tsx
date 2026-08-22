@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {Image,Text,View,Pressable} from 'react-native';
-import {GameShell,Result} from './GameShell';
-import {useAppProgress} from '../_layout';
+import {GameShell,Result} from '../../src/game/GameShell';
+import {useAppProgress} from '../../app/_layout';
 
 const solution=['right','down','right','up','right'];
 export default function Mazes(){
@@ -24,7 +24,7 @@ export default function Mazes(){
       <View style={{position:'absolute',left:'35%',top:'15%',width:16,height:'45%',backgroundColor:'#fff',borderRadius:10}}/>
       <View style={{position:'absolute',left:'60%',top:'40%',width:16,height:'45%',backgroundColor:'#fff',borderRadius:10}}/>
       <View style={{position:'absolute',left:'35%',top:'60%',width:'55%',height:16,backgroundColor:'#fff',borderRadius:10}}/>
-      <Image source={require('../../assets/animal-giraffe.png')} resizeMode="contain" style={{position:'absolute',left:'7%',top:'8%',width:48,height:48}}/>
+      <Image source={require('../../assets/avatar-rabbit.png')} resizeMode="contain" style={{position:'absolute',left:'7%',top:'8%',width:48,height:48}}/>
       <Image source={require('../../assets/trophy.png')} resizeMode="contain" style={{position:'absolute',right:'5%',bottom:'5%',width:48,height:48}}/>
     </View>
   </View>

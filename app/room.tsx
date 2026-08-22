@@ -1,4 +1,4 @@
-import { ArtworkScreen } from './artwork';
+import { ArtworkScreen } from '../src/ui/ArtworkScreen';
 import { router } from 'expo-router';
 
 export default function Room(){

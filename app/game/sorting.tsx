@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {Image,Text,View,Pressable} from 'react-native';
-import {GameShell,Result} from './GameShell';
-import {useAppProgress} from '../_layout';
+import {GameShell,Result} from '../../src/game/GameShell';
+import {useAppProgress} from '../../app/_layout';
 
 const items=[
   ['ג׳ירפה','חיות',require('../../assets/animal-giraffe.png')],

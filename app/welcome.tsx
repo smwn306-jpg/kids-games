@@ -1,7 +1,7 @@
 import { Image, Pressable, StyleSheet, Text, View, useWindowDimensions, Animated, Easing } from 'react-native';
 import { router } from 'expo-router';
 import { useEffect, useRef } from 'react';
-import { speakHebrew, stopSpeech } from './voice';
+import { speakHebrew, stopSpeech } from '../src/voice';
 import { useAppProgress } from './_layout';
 
 const W = 321, H = 500;
