@@ -25,7 +25,7 @@ export function ArtworkScreen({source, sourceW, sourceH, targets, starBox, backg
 
   return <View style={[styles.stage,{backgroundColor:background}]}>
     <View pointerEvents="none" style={{position:'absolute',left:layout.offsetX,top:layout.offsetY,width:layout.canvasWidth,height:layout.canvasHeight}}>
-      <Image source={source} resizeMode="cover" style={StyleSheet.absoluteFillObject} />
+      <Image source={source} resizeMode="contain" style={StyleSheet.absoluteFillObject} />
     </View>
     {starBox && <StarCountOverlay stars={stars} x={starBox.x} y={starBox.y} width={starBox.w} height={starBox.h} scaleX={layout.scale} scaleY={layout.scale} offsetX={layout.offsetX} offsetY={layout.offsetY}/>} 
     {overlays && <View pointerEvents="none" style={StyleSheet.absoluteFillObject}>{typeof overlays==='function' ? overlays({scale:layout.scale,offsetX:layout.offsetX,offsetY:layout.offsetY}) : overlays}</View>}
