@@ -15,12 +15,13 @@ export type ReferenceLayout = {
 };
 
 /**
- * Maps a fixed reference design to the device with one uniform scale.
+ * Maps a fixed reference design to the device using one uniform cover scale.
  *
- * Reference screens are artwork specifications, not arbitrary full-screen
- * wallpapers. We therefore use `contain` semantics: the complete reference
- * remains visible and keeps its aspect ratio. Artwork, overlays and touch
- * targets all use the exact same scale and offsets, so they cannot drift apart.
+ * The reference is treated as the source canvas. The same scale and offsets
+ * are used for the artwork, overlays and touch targets. This is important:
+ * React Native must not perform a second, independent resize of the artwork.
+ * When the device aspect ratio differs from the reference, the canvas is
+ * centered and the excess is cropped equally rather than leaving blank space.
  */
 export function createReferenceLayout(
   referenceWidth: number,
@@ -28,15 +29,22 @@ export function createReferenceLayout(
   screenWidth: number,
   screenHeight: number,
 ): ReferenceLayout {
-  const scale = Math.min(screenWidth / referenceWidth, screenHeight / referenceHeight);
-  const canvasWidth = referenceWidth * scale;
-  const canvasHeight = referenceHeight * scale;
+  const safeReferenceWidth = Math.max(1, referenceWidth);
+  const safeReferenceHeight = Math.max(1, referenceHeight);
+  const safeScreenWidth = Math.max(1, screenWidth);
+  const safeScreenHeight = Math.max(1, screenHeight);
 
-  // Keep reference-driven screens anchored to the top of the app viewport.
-  // This matches the supplied portrait references and avoids moving controls
-  // vertically when the device has extra height.
-  const offsetX = (screenWidth - canvasWidth) / 2;
-  const offsetY = 0;
+  // `cover` semantics: fill the complete viewport while preserving aspect
+  // ratio. Any crop is represented by the offsets and is therefore shared by
+  // artwork, overlays and pressable targets.
+  const scale = Math.max(
+    safeScreenWidth / safeReferenceWidth,
+    safeScreenHeight / safeReferenceHeight,
+  );
+  const canvasWidth = safeReferenceWidth * scale;
+  const canvasHeight = safeReferenceHeight * scale;
+  const offsetX = (safeScreenWidth - canvasWidth) / 2;
+  const offsetY = (safeScreenHeight - canvasHeight) / 2;
 
   const toScreen = (x: number, y: number) => ({
     left: offsetX + x * scale,
@@ -51,10 +59,10 @@ export function createReferenceLayout(
   });
 
   return {
-    referenceWidth,
-    referenceHeight,
-    screenWidth,
-    screenHeight,
+    referenceWidth: safeReferenceWidth,
+    referenceHeight: safeReferenceHeight,
+    screenWidth: safeScreenWidth,
+    screenHeight: safeScreenHeight,
     scale,
     offsetX,
     offsetY,
