@@ -15,13 +15,10 @@ export type ReferenceLayout = {
 };
 
 /**
- * Maps a fixed reference design to the device using one uniform cover scale.
- *
- * The reference is treated as the source canvas. The same scale and offsets
- * are used for the artwork, overlays and touch targets. This is important:
- * React Native must not perform a second, independent resize of the artwork.
- * When the device aspect ratio differs from the reference, the canvas is
- * centered and the excess is cropped equally rather than leaving blank space.
+ * Maps the reference design to the device using a single uniform scale.
+ * The reference is fit to the FULL device width, preserving its aspect ratio.
+ * Vertical letterboxing is allowed; the artwork is never cropped horizontally
+ * or vertically. The same scale/offset is used for touch targets.
  */
 export function createReferenceLayout(
   referenceWidth: number,
@@ -34,17 +31,14 @@ export function createReferenceLayout(
   const safeScreenWidth = Math.max(1, screenWidth);
   const safeScreenHeight = Math.max(1, screenHeight);
 
-  // `cover` semantics: fill the complete viewport while preserving aspect
-  // ratio. Any crop is represented by the offsets and is therefore shared by
-  // artwork, overlays and pressable targets.
-  const scale = Math.max(
-    safeScreenWidth / safeReferenceWidth,
-    safeScreenHeight / safeReferenceHeight,
-  );
+  // Width is the source of truth: the reference fills the device width.
+  // This preserves the 289:500 reference aspect ratio and prevents the
+  // reference artwork from being rendered as a small inset canvas.
+  const scale = safeScreenWidth / safeReferenceWidth;
   const canvasWidth = safeReferenceWidth * scale;
   const canvasHeight = safeReferenceHeight * scale;
   const offsetX = (safeScreenWidth - canvasWidth) / 2;
-  const offsetY = (safeScreenHeight - canvasHeight) / 2;
+  const offsetY = Math.max(0, (safeScreenHeight - canvasHeight) / 2);
 
   const toScreen = (x: number, y: number) => ({
     left: offsetX + x * scale,
