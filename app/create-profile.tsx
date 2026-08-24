@@ -9,17 +9,14 @@ const W = 289, H = 500;
 export default function CreateProfile() {
   const { width, height } = useWindowDimensions();
   const canvasWidth = width;
-  // Target the visual height requested for the phone: 70% of the available viewport.
   const canvasHeight = height * 0.70;
-  const scaleX = canvasWidth / W;
-  const scaleY = canvasHeight / H;
-  const scale = scaleX;
+  const scale = canvasWidth / W;
   const offsetY = (height - canvasHeight) / 2;
   const rect = (x: number, y: number, w: number, h: number) => ({
-    left: x * scaleX,
-    top: offsetY + y * scaleY,
-    width: w * scaleX,
-    height: h * scaleY,
+    left: x * scale,
+    top: offsetY + y * (canvasHeight / H),
+    width: w * scale,
+    height: h * (canvasHeight / H),
   });
   const { voiceEnabled } = useAppProgress();
   const [name, setName] = useState('');
@@ -32,10 +29,10 @@ export default function CreateProfile() {
 
   return (
     <View style={[s.root, { width, height }]}>
-      <View pointerEvents="none" style={[s.canvas, { left: 0, top: offsetY, width: canvasWidth, height: canvasHeight }]}>
+      <View pointerEvents="none" style={{ position: 'absolute', left: 0, top: offsetY, width: canvasWidth, height: canvasHeight, overflow: 'hidden' }}>
         <Image
           source={require('../assets/name-reference.png')}
-          style={{ width: canvasWidth, height: canvasHeight, position: 'absolute', left: 0, top: 0 }}
+          style={{ position: 'absolute', left: 0, top: 0, width: canvasWidth, height: canvasHeight }}
           resizeMode="stretch"
         />
       </View>
@@ -50,7 +47,6 @@ export default function CreateProfile() {
 
 const s = StyleSheet.create({
   root: { flex: 1, backgroundColor: '#dff5ff', overflow: 'hidden' },
-  canvas: { position: 'absolute', overflow: 'hidden' },
   input: { position: 'absolute', backgroundColor: 'transparent', borderWidth: 0, borderColor: 'transparent', borderRadius: 12, fontWeight: '900', color: '#5c3db3', paddingVertical: 0, paddingHorizontal: 8, zIndex: 10 },
   touchLayer: { position: 'absolute', zIndex: 20 },
   hiddenText: { opacity: 0 },
