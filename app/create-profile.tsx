@@ -21,9 +21,10 @@ export default function CreateProfile() {
   };
 
   return (
-    <View style={s.root}>
-      <View pointerEvents="none" style={{ position: 'absolute', left: layout.offsetX, top: layout.offsetY, width: layout.canvasWidth, height: layout.canvasHeight }}>
+    <View style={[s.root, { width, height }]}>
+      <View pointerEvents="none" style={[s.canvasDebug, { left: layout.offsetX, top: layout.offsetY, width: layout.canvasWidth, height: layout.canvasHeight }]}>
         <Image source={require('../assets/name-reference.png')} style={StyleSheet.absoluteFillObject} resizeMode="stretch" />
+        <Text style={s.debugText}>{`SCREEN ${Math.round(width)}×${Math.round(height)}  CANVAS ${Math.round(layout.canvasWidth)}×${Math.round(layout.canvasHeight)}  SCALE ${layout.scale.toFixed(3)}  OFFSET ${Math.round(layout.offsetX)},${Math.round(layout.offsetY)}`}</Text>
       </View>
 
       <Pressable accessibilityRole="button" accessibilityLabel="שמעו איך למלא את השם" style={[rect(112, 236, 66, 66), s.touchLayer]} onPress={() => speakHebrew('איך קוראים לך? כתבו את השם שלכם בתיבה.', voiceEnabled)} />
@@ -36,6 +37,8 @@ export default function CreateProfile() {
 
 const s = StyleSheet.create({
   root: { flex: 1, backgroundColor: '#dff5ff', overflow: 'hidden' },
+  canvasDebug: { position: 'absolute', borderWidth: 3, borderColor: '#00ff00', overflow: 'hidden' },
+  debugText: { position: 'absolute', left: 4, top: 4, color: '#fff', backgroundColor: 'rgba(0,0,0,0.75)', paddingHorizontal: 5, paddingVertical: 3, fontSize: 10, fontWeight: '700' },
   input: { position: 'absolute', backgroundColor: 'transparent', borderWidth: 0, borderColor: 'transparent', borderRadius: 12, fontWeight: '900', color: '#5c3db3', paddingVertical: 0, paddingHorizontal: 8, zIndex: 10 },
   touchLayer: { position: 'absolute', zIndex: 20 },
   hiddenText: { opacity: 0 },
