@@ -20,7 +20,7 @@ export default function Home(){
   if(!profilesReady || !profiles.length || !selectedProfileId) return <View style={styles.loading}/>;
   return <View style={styles.root}>
     <View pointerEvents="none" style={{position:'absolute',left:layout.offsetX,top:layout.offsetY,width:layout.canvasWidth,height:layout.canvasHeight}}>
-      <Image source={require('../assets/home-reference-clean-ui.png')} resizeMode="cover" style={StyleSheet.absoluteFillObject}/>
+      <Image source={require('../assets/home-reference-clean-ui.png')} resizeMode="contain" style={StyleSheet.absoluteFillObject}/>
     </View>
     <Text pointerEvents="none" style={[styles.greeting,{...r(18,82,110,28),fontSize:15*Math.min(layout.scale,1.4)}]}>שלום {activeProfile?.name || ''}!</Text>
     <StarCountOverlay stars={stars} scaleX={layout.scale} scaleY={layout.scale} offsetX={layout.offsetX} offsetY={layout.offsetY} x={84} y={33} width={74} height={30}/>
