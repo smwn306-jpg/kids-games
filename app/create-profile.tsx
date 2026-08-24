@@ -24,7 +24,13 @@ export default function CreateProfile() {
     <View style={s.root}>
       <View
         pointerEvents="none"
-        style={{ position: 'absolute', left: layout.offsetX, top: layout.offsetY, width: layout.canvasWidth, height: layout.canvasHeight }}
+        style={{
+          position: 'absolute',
+          left: layout.offsetX,
+          top: layout.offsetY,
+          width: layout.canvasWidth,
+          height: layout.canvasHeight,
+        }}
       >
         <Image
           source={require('../assets/name-reference.png')}
