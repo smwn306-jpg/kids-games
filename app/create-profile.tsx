@@ -12,9 +12,7 @@ export default function CreateProfile() {
   const layout = createReferenceLayout(W, H, width, height);
   const { voiceEnabled } = useAppProgress();
   const [name, setName] = useState('');
-
-  const rect = (x: number, y: number, w: number, h: number) =>
-    layout.rectToScreen({ x, y, w, h });
+  const rect = (x: number, y: number, w: number, h: number) => layout.rectToScreen({ x, y, w, h });
 
   const goNext = () => {
     const trimmed = name.trim();
@@ -26,18 +24,12 @@ export default function CreateProfile() {
     <View style={s.root}>
       <View
         pointerEvents="none"
-        style={{
-          position: 'absolute',
-          left: layout.offsetX,
-          top: layout.offsetY,
-          width: layout.canvasWidth,
-          height: layout.canvasHeight,
-        }}
+        style={{ position: 'absolute', left: layout.offsetX, top: layout.offsetY, width: layout.canvasWidth, height: layout.canvasHeight }}
       >
         <Image
           source={require('../assets/name-reference.png')}
           style={StyleSheet.absoluteFillObject}
-          resizeMode="cover"
+          resizeMode="contain"
         />
       </View>
 
@@ -64,7 +56,7 @@ export default function CreateProfile() {
       <Pressable
         accessibilityRole="button"
         accessibilityLabel="הבא"
-        style={[rect(79, 426, 139, 50), s.touchLayer, s.nextButton]}
+        style={[rect(79, 426, 139, 50), s.touchLayer]}
         onPress={goNext}
       >
         <Text style={s.hiddenText}>הבא</Text>
@@ -83,32 +75,11 @@ export default function CreateProfile() {
 }
 
 const s = StyleSheet.create({
-  root: {
-    flex: 1,
-    backgroundColor: '#dff5ff',
-    overflow: 'hidden',
-  },
+  root: { flex: 1, backgroundColor: '#dff5ff', overflow: 'hidden' },
   input: {
-    position: 'absolute',
-    backgroundColor: 'transparent',
-    borderWidth: 0,
-    borderColor: 'transparent',
-    borderRadius: 12,
-    fontWeight: '900',
-    color: '#5c3db3',
-    paddingVertical: 0,
-    paddingHorizontal: 8,
-    zIndex: 10,
+    position: 'absolute', backgroundColor: 'transparent', borderWidth: 0, borderColor: 'transparent',
+    borderRadius: 12, fontWeight: '900', color: '#5c3db3', paddingVertical: 0, paddingHorizontal: 8, zIndex: 10,
   },
-  touchLayer: {
-    position: 'absolute',
-    zIndex: 20,
-  },
-  nextButton: {
-    minWidth: 139,
-    minHeight: 50,
-  },
-  hiddenText: {
-    opacity: 0,
-  },
+  touchLayer: { position: 'absolute', zIndex: 20 },
+  hiddenText: { opacity: 0 },
 });
