@@ -15,9 +15,12 @@ export type ReferenceLayout = {
 };
 
 /**
- * Maps a fixed-size reference design to the device using one uniform scale.
- * `cover` semantics are intentional: the reference keeps its aspect ratio and
- * fills the viewport; any crop is shared by artwork, overlays and touch targets.
+ * Maps a fixed reference design to the device with one uniform scale.
+ *
+ * Reference screens are artwork specifications, not arbitrary full-screen
+ * wallpapers. We therefore use `contain` semantics: the complete reference
+ * remains visible and keeps its aspect ratio. Artwork, overlays and touch
+ * targets all use the exact same scale and offsets, so they cannot drift apart.
  */
 export function createReferenceLayout(
   referenceWidth: number,
@@ -25,11 +28,15 @@ export function createReferenceLayout(
   screenWidth: number,
   screenHeight: number,
 ): ReferenceLayout {
-  const scale = Math.max(screenWidth / referenceWidth, screenHeight / referenceHeight);
+  const scale = Math.min(screenWidth / referenceWidth, screenHeight / referenceHeight);
   const canvasWidth = referenceWidth * scale;
   const canvasHeight = referenceHeight * scale;
+
+  // Keep reference-driven screens anchored to the top of the app viewport.
+  // This matches the supplied portrait references and avoids moving controls
+  // vertically when the device has extra height.
   const offsetX = (screenWidth - canvasWidth) / 2;
-  const offsetY = (screenHeight - canvasHeight) / 2;
+  const offsetY = 0;
 
   const toScreen = (x: number, y: number) => ({
     left: offsetX + x * scale,
