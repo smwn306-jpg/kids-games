@@ -9,16 +9,16 @@ export default function ChooseAvatar() {
   const { width, height } = useWindowDimensions();
   const canvasWidth = width;
   const canvasHeight = height * 0.70;
-  const scale = canvasWidth / W;
+  const scaleX = canvasWidth / W;
   const scaleY = canvasHeight / H;
   const offsetY = (height - canvasHeight) / 2;
   const { name } = useLocalSearchParams<{ name: string }>();
   const [selected, setSelected] = useState('lion');
   const positions = [[18,136],[94,136],[170,136],[18,220],[94,220],[170,220],[18,307],[94,307],[170,307]];
   const rect = (x: number, y: number, w: number, h: number) => ({
-    left: x * scale,
+    left: x * scaleX,
     top: offsetY + y * scaleY,
-    width: w * scale,
+    width: w * scaleX,
     height: h * scaleY,
   });
 
@@ -34,22 +34,31 @@ export default function ChooseAvatar() {
 
       {avatars.map(([key, label], i) => {
         const [x, y] = positions[i];
+        const target = rect(x - 2, y - 2, 70, 70);
         return (
-          <Pressable
-            key={key}
-            accessibilityRole="button"
-            accessibilityLabel={label}
-            onPress={() => setSelected(key)}
-            style={[rect(x - 2, y - 2, 70, 70), { borderRadius: 16, borderWidth: selected === key ? 3 * scale : 0, borderColor: '#71c33a' }]}
-          >
+          <View key={key} pointerEvents="box-none">
+            <Pressable
+              accessibilityRole="button"
+              accessibilityLabel={label}
+              onPress={() => setSelected(key)}
+              style={[target, s.touchTarget]}
+            />
             {selected === key && (
-              <Image
-                source={require('../assets/selected-check.png')}
-                style={{ position: 'absolute', right: -3 * scale, top: -3 * scale, width: 24 * scale, height: 24 * scale }}
-                resizeMode="contain"
-              />
+              <View pointerEvents="none" style={[target, s.selectionFrame]}>
+                <Image
+                  source={require('../assets/selected-check.png')}
+                  style={{
+                    position: 'absolute',
+                    right: -6 * scaleX,
+                    top: -6 * scaleY,
+                    width: 24 * scaleX,
+                    height: 24 * scaleY,
+                  }}
+                  resizeMode="contain"
+                />
+              </View>
             )}
-          </Pressable>
+          </View>
         );
       })}
 
@@ -67,6 +76,15 @@ export default function ChooseAvatar() {
 
 const s = StyleSheet.create({
   root: { flex: 1, backgroundColor: '#dff5ff', overflow: 'hidden' },
-  nextButton: { zIndex: 20 },
+  touchTarget: { position: 'absolute', zIndex: 20 },
+  selectionFrame: {
+    position: 'absolute',
+    zIndex: 30,
+    borderRadius: 16,
+    borderWidth: 3,
+    borderColor: '#71c33a',
+    overflow: 'visible',
+  },
+  nextButton: { position: 'absolute', zIndex: 40 },
   hiddenText: { opacity: 0 },
 });
